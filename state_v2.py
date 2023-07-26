@@ -74,7 +74,6 @@ class StateMachine:
 
 # Test the state machine
 sm = StateMachine()
-sm.execute()  # Capture
-sm.execute()
-sm.execute()
-
+sm.execute() # Capture
+sm.execute() # Transform
+sm.execute() # Exposure
