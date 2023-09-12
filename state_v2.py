@@ -7,6 +7,7 @@ class StateMachine:
             'Capture': self.capture_image,
             'Transform': self.transform_image,
             'DetermineExposure': self.determine_exposure,
+            'Light_Control': self.light_ctrl,
         }
         self.current_state = 'Capture'
         self.image = None
@@ -48,6 +49,7 @@ class StateMachine:
             self.image = cv2.calcHist([self.image], [0], None, [256], [0, 256])
 
             cv2.imshow("show transform", self.image)
+
             # Transition to next state
             self.current_state = 'DetermineExposure'
         else:
@@ -57,17 +59,21 @@ class StateMachine:
         print("Determining exposure")
         if self.image is not None:
             mean_value = np.mean(self.image)
-            if mean_value > 200: # arbitrary threshold
+            if mean_value > 50000: # arbitrary threshold
                 print("Image is overexposed")
+                self.current_state = 'Light_Control'
             elif mean_value < 50: # arbitrary threshold
                 print("Image is underexposed")
+                self.current_state = 'Light_Control'
             else:
                 print("Image exposure is fine")
-
-            # Transition back to Capture state for next cycle
-            self.current_state = 'Capture'
+                self.current_state = 'Capture'
         else:
             print("No image to determine exposure")
+
+    def light_ctrl(self):
+        print("Light control finished")
+        self.current_state = 'Capture'
 
     def execute(self):
         self.states[self.current_state]()
@@ -77,3 +83,4 @@ sm = StateMachine()
 sm.execute() # Capture
 sm.execute() # Transform
 sm.execute() # Exposure
+sm.execute() # Light Control
