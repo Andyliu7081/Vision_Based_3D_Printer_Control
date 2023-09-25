@@ -10,3 +10,5 @@ Using the webcam to detect construction errors for 3D printing soft materials ca
 7.26 Updates: Uploaded State_v2, which fixed capture bugs.
 
 8.26 Updates: Uploaded Video.py function to record the printing procedure and got the first video. And trying to use the LBP method to conduct defect detection.
+
+9.25 Updates: Uploaded simple edge/error detection operators
